@@ -1,0 +1,21 @@
+name: Clear blocked Pages deployment
+
+on:
+  push:
+    paths:
+      - .github/workflows/clear-blocked-pages.yml
+  workflow_dispatch:
+
+permissions:
+  pages: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel the blocked Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh api --method POST
+          repos/mrsmiles-ai/ruby7art/pages/deployments/8d6e2e6ecb60bc24e225b00ed42c513c12b570f2/cancel
